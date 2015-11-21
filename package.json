@@ -1,0 +1,21 @@
+{
+  "name": "track-pol-tweet",
+  "version": "1.0.0",
+  "description": "\"Takes Politie tweets about break-ins, cleans up location, show on a map\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\"AG\"",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^2.0.4",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-nodemon": "^0.4.0",
+    "oauth": "0.9.12"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
