@@ -22,14 +22,24 @@ Geohelper.prototype.getGeoCodes = function(callback, context){
 	var context = context;
 
 	https.get(this.url, function(res){
-		console.log("Status code " , res.statusCode);
+
+		//todo if statement for status 200 or log errors
+		//console.log("Status code " , res.statusCode);
 		//console.log("Status code " , res.headers);
+
+		var resultBody = '';
 
 		res.on('data', function(d) {
 			//process.stdout.write(d);
 			//console.log(d[1].results)
-			console.log(Object.keys(d));
-			callback.call(context, d);
+			//console.log(Object.keys(d));
+			resultBody += d;
+
+		});
+
+		res.on('end', function(){
+			var result = JSON.parse(resultBody);
+			callback.call(context, result);
 		});
 
 	});

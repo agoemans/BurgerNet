@@ -34,8 +34,10 @@ module.exports = function(app, express, path)
 	app.get('/GeoCodes', function(req, res) {
 		var GeoHelper = require('./locationfiles/geohelper.js');
 		var geohelper = new GeoHelper();
-		geohelper.mainGeoCall(geohelper.geoCallback, this);
-		res.send(geohelper.requestedData);
+		geohelper.mainGeoCall(function(data){
+			res.json(data.results);
+		}, this);
+
 
 	});
 
