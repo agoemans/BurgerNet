@@ -4,8 +4,8 @@ function Geohelper(location){
 	this.url = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
 	//todo : this is just for test, remove when db is in place
-	this.location = 'Amsterdam';
-	this.url = this.url + this.location;
+	this.region = location + ', Rijnsburg';
+	this.url = this.url + this.region;
 	this.requestedData = 'None';
 
 }
@@ -49,6 +49,7 @@ Geohelper.prototype.geoCallback = function(data){
 	// todo - store the stuff in a database
 	this.requestedData = data;
 	console.log(this.requestedData);
+
 	return this.requestedData;
 };
 

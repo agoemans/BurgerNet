@@ -17,26 +17,17 @@ module.exports = function(app, express, path)
 
 	/* Test DB connection -- to be used*/
 	app.get('/dbtest', function(req, res) {
-		//var textCleanUp = require('./texthelper.js');
-		//res.send(textCleanUp.fixDate());
-		//res.send(textCleanUp.sliceLocation());
-	});
-
-	/* Location Cleanup Test -- to remove? */
-	app.get('/locClean', function(req, res) {
-		var LocationHelper = require('./locationfiles/lochelper.js');
-		var locationhelper = new LocationHelper();
-		res.send(locationhelper.mainFunct());
+		var db =  require('../model/initmodel.js');
+		var d = new db();
+		res.send('connected to db');
 
 	});
 
-	/* Test Geocodes */
-	app.get('/GeoCodes', function(req, res) {
-		var GeoHelper = require('./locationfiles/geohelper.js');
-		var geohelper = new GeoHelper();
-		geohelper.mainGeoCall(function(data){
-			res.json(data.results);
-		}, this);
+	/* Combine Geo and Loc*/
+	app.get('/api/geocodes', function(req, res) {
+		//todo remove later - add to database
+		var getLocJSON = require('./locationfiles/locgeocallback.js');
+		getLocJSON(req,res);
 
 
 	});

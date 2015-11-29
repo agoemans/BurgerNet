@@ -12,7 +12,7 @@ Locationhelper.prototype.mainFunct = function(){
 	this.crimeSubStr();
 
 	if (this.tempStreet != null && this.crimeType !=  null) {
-		return [this.tempStreet, this.crimeType]
+		return [this.tempStreet]
 	}
 
 };
