@@ -15,13 +15,19 @@ module.exports = function(app, express, path)
 	app.get('/api/locations', function(req, res) {
 		var getJSON = require('./twitterfiles/twitterwriteresult.js');
 		getJSON(req,res);
+
 	});
 
 	/* Test DB connection -- to be used*/
 	app.get('/dbtest', function(req, res) {
-		var db =  require('../model/initmodel.js');
-		var d = new db();
-		res.send('connected to db');
+		//var db =  require('../model/initMySql.js');
+		//var d = new db();
+		//res.send("connecting");
+
+		var rNumber = require('../model/randomNGenerator.js');
+		var randomNumber = new rNumber();
+
+		res.send(randomNumber.createUniqueID());
 
 	});
 

@@ -1,8 +1,10 @@
 var Twitterhelper = require('../auth/twitteroauth');
 var Twitterobject = require('./twitterobject');
+var QueryProcessor = require('../../model/queryprocessor');
 
 function Twitterlist(){
 	this.oldTweetList = new Twitterhelper();
+	this.queryProcessor = new QueryProcessor();
 }
 
 Twitterlist.prototype.createList = function (callback, context) {
@@ -20,10 +22,15 @@ Twitterlist.prototype.onJsonLoad = function(data){
 
 	for(var i= 0;i<twitterResponse.length;i++){
 		var tweet = new Twitterobject(twitterResponse[i]);
+		this.insertTweetTable(tweet);
 		tweetObjectList.push(tweet);
 	};
 
 	this.onDataReceived.call(this.context, tweetObjectList);
+};
+
+Twitterlist.prototype.insertTweetTable = function(data){
+	this.queryProcessor.insertTweets(data);
 };
 
 module.exports = Twitterlist;

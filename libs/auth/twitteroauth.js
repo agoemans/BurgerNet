@@ -1,5 +1,5 @@
-var confReader = require('./options');
-var options = new confReader('/config.json');
+var confReader = require('./../../confReader');
+var options = new confReader('/libs/auth/config.json');
 
 function Twitterhelper(){
 	this.twitterKey = options.twitterKey;
