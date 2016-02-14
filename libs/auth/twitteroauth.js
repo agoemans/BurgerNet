@@ -1,10 +1,11 @@
-var options = require('./options');
+var confReader = require('./options');
+var options = new confReader('/config.json');
 
 function Twitterhelper(){
-	this.twitterKey = options.storageConfig.twitterKey;
-	this.twitterSecret = options.storageConfig.twitterSecret;
-	this.token = options.storageConfig.token;
-	this.secret = options.storageConfig.secret;
+	this.twitterKey = options.twitterKey;
+	this.twitterSecret = options.twitterSecret;
+	this.token = options.token;
+	this.secret = options.secret;
 }
 
 Twitterhelper.prototype.mainCall = function(callback, context){
@@ -15,10 +16,10 @@ Twitterhelper.prototype.oauthCall = function(callback, context){
 	var twitterResponse = [];
 
 	var loginData = {
-		twitterKey: options.storageConfig.twitterKey,
-		twitterSecret: options.storageConfig.twitterSecret,
-		token: options.storageConfig.token,
-		secret: options.storageConfig.secret
+		twitterKey: options.twitterKey,
+		twitterSecret: options.twitterSecret,
+		token: options.token,
+		secret: options.secret
 	};
 
 	var OAuth = require('oauth');

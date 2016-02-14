@@ -10,6 +10,8 @@ module.exports = function(app, express, path)
 	});
 
 	/* Search */
+	/*Currently gets twitter resp and displays on screen*/
+	//todo - store in db
 	app.get('/api/locations', function(req, res) {
 		var getJSON = require('./twitterfiles/twitterwriteresult.js');
 		getJSON(req,res);
