@@ -20,7 +20,10 @@ QueryProcessor.prototype.insertTweets = function (data){
 
 	//todo only for testing, remove this function later
 
-	var tweet = {idTweet: data.tweetID, TweetText: data.tweetText, createdat: data.createdAt};
+	var tempdate = new Date(data.createdAt);
+
+	var tweet = {idTweet: data.tweetID, TweetText: data.tweetText, createdat: tempdate};
+
 	con.query('INSERT INTO Tweet SET ?', tweet, function(err,res){
 		if(err) throw err;
 	})
@@ -31,6 +34,35 @@ QueryProcessor.prototype.insertTweets = function (data){
 	})
 
 };
+
+QueryProcessor.prototype.updateStreetID = function (){
+
+	var con = mysql.createConnection({
+		host:this.host,
+		user:dbOptions.user,
+		password:this.password,
+		database:this.database
+	});
+
+	//todo only for testing, remove this function later
+
+	var templist;
+	con.query('SELECT * FROM Tweet', function(err,rows){
+		if(err) throw err;
+		if (!err){
+			templist = rows;
+			console.log(templist);
+		}
+	});
+
+
+	con.end(function(err){
+		//Ends connection
+	})
+
+	return "hi";
+};
+
 
 
 

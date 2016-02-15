@@ -23,5 +23,6 @@ node_modules
 
 # my own files
 config.json
+randomNGenerator.js
 
 # Created by .ignore support plugin (hsz.mobi)

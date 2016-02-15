@@ -24,10 +24,10 @@ module.exports = function(app, express, path)
 		//var d = new db();
 		//res.send("connecting");
 
-		var rNumber = require('../model/randomNGenerator.js');
-		var randomNumber = new rNumber();
+		var updateDB = require('../model/queryprocessor.js');
+		var updatedb = new updateDB();
 
-		res.send(randomNumber.createUniqueID());
+		res.send(updatedb.updateStreetID());
 
 	});
 
