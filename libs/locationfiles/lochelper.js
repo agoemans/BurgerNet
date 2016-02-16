@@ -1,19 +1,22 @@
-function Locationhelper(){
-	this.locJSON = "Afgelopen weekend zijn er twee inbraak pogingen " +
-	"geweest in Rijnsburg. 1 op de Siegenlaan en 1 op de Collegiantenstraat. Iets gezien?09008844";
+function Locationhelper(data){
+	//this.locJSON = "Afgelopen weekend zijn er twee inbraak pogingen " +
+	//"geweest in Rijnsburg. 1 op de Siegenlaan en 1 op de Collegiantenstraat. Iets gezien?09008844";
 	//tempStreet will be removed later, replaced with object
-	this.tempStreet = 'None';
-	this.crimeType = 'None;'
+	this.locJson = data;
+	this.tempStreet = null;
+	this.crimeType = null;
 }
 
 Locationhelper.prototype.mainFunct = function(){
 // this is the main function
+	console.log("inside the locationhelpder funct");
+	this.popRegion();
 	this.locationSubStr();
 	this.crimeSubStr();
 
-	if (this.tempStreet != null && this.crimeType !=  null) {
-		return [this.tempStreet]
-	}
+	//if (this.tempStreet != null && this.crimeType !=  null) {
+	//	return [this.tempStreet]
+	//}
 
 };
 
@@ -26,10 +29,11 @@ Locationhelper.prototype.locationSubStr = function(){
 	var regExArray = [re1, re2, re3];
 
 	for(var i = 0; i < regExArray.length; i++) {
-		var locHolder = this.locJSON.match(regExArray[i])
+		var locHolder = this.locJson.match(regExArray[i])
 		if (locHolder != null) {
 			this.tempStreet = locHolder;
 		}
+
 	}
 
 };
@@ -41,7 +45,7 @@ Locationhelper.prototype.crimeSubStr = function(){
 	var regExArray = [re1, re2];
 
 	for(var i = 0; i < regExArray.length; i++) {
-		var typeHolder = this.locJSON.match(regExArray[i])
+		var typeHolder = this.locJson.match(regExArray[i])
 		if (typeHolder != null) {
 			this.crimeType = typeHolder;
 		}
@@ -52,9 +56,10 @@ Locationhelper.prototype.crimeSubStr = function(){
 
 Locationhelper.prototype.popRegion = function(){
 	//will later take in an input -- removes the Region
+	console.log(this.locJson);
 	var region = 'Rijnsburg';
-	if (this.locJSON.search(region) != -1){
-		return this.locJSON.replace(region, '');
+	if (this.locJson.search(region) != -1){
+		return this.locJson.replace(region, '');
 	}
 };
 
