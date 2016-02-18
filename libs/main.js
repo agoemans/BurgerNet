@@ -27,7 +27,7 @@ module.exports = function(app, express, path)
 		var updateDB = require('../model/queryprocessor.js');
 		var updatedb = new updateDB();
 
-		res.send(updatedb.updateStreetID());
+		res.send(updatedb.updateAdditionalTables());
 
 	});
 
