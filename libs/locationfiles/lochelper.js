@@ -2,6 +2,7 @@ function Locationhelper(data){
 	//this.locJSON = "Afgelopen weekend zijn er twee inbraak pogingen " +
 	//"geweest in Rijnsburg. 1 op de Siegenlaan en 1 op de Collegiantenstraat. Iets gezien?09008844";
 	//tempStreet will be removed later, replaced with object
+	//console.log(data);
 	this.locJson = data.TweetText;
 	this.tweetID = data.idTweet;
 	this.tempStreet = null;

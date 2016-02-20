@@ -22,7 +22,10 @@ Twitterlist.prototype.onJsonLoad = function(data){
 
 	for(var i= 0;i<twitterResponse.length;i++){
 		var tweet = new Twitterobject(twitterResponse[i]);
-		this.insertTweetTable(tweet);
+		tweet.mainFunction();
+		this.queryProcessor.insertTweets(tweet);
+		this.queryProcessor.updateStreetTable(tweet);
+		this.queryProcessor.updateCrimeTable(tweet);
 		tweetObjectList.push(tweet);
 	};
 

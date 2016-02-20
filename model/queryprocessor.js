@@ -91,7 +91,7 @@ QueryProcessor.prototype.updateStreetTable = function (data){
 		database:this.database
 	});
 
-	var streetInfo = {tweetid: data.idTweet, streetName: data.tempStreet};
+	var streetInfo = {tweetid: data.tweetID, streetName: data.streetName};
 
 	con.query('INSERT INTO streetList SET ?', streetInfo, function(err,res){
 		if(err) throw err;
@@ -112,7 +112,7 @@ QueryProcessor.prototype.updateCrimeTable = function (data){
 		database:this.database
 	});
 
-	var crimeInfo = {tweetid: data.idTweet, crimeType: data.crimeType};
+	var crimeInfo = {tweetid: data.tweetID, crimeType: data.crimeType};
 
 	con.query('INSERT INTO crimeList SET ?', crimeInfo, function(err,res){
 		if(err) throw err;
