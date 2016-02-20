@@ -1,10 +1,10 @@
-function Locationhelper(data){
+function Locationhelper(id, text, retweeted){
 	//this.locJSON = "Afgelopen weekend zijn er twee inbraak pogingen " +
 	//"geweest in Rijnsburg. 1 op de Siegenlaan en 1 op de Collegiantenstraat. Iets gezien?09008844";
 	//tempStreet will be removed later, replaced with object
-	//console.log(data);
-	this.locJson = data.TweetText;
-	this.tweetID = data.idTweet;
+	this.locJson = text;
+	this.tweetID = id;
+	this.retweeted = retweeted;
 	this.tempStreet = null;
 	this.crimeType = null;
 }
@@ -12,6 +12,7 @@ function Locationhelper(data){
 Locationhelper.prototype.mainFunct = function(){
 // this is the main function
 //	console.log("inside the locationhelpder funct");
+	this.findRetweets();
 	this.popRegion();
 	this.locationSubStr();
 	this.crimeSubStr();
@@ -44,6 +45,9 @@ Locationhelper.prototype.crimeSubStr = function(){
 // this looks for crime type
 	var re1 = /[A-z]*(inbraak)/g;
 	var re2 = /[A-z]*(ingebroken)/g;
+	var re3 = /[A-z]*(rijding)/g;
+	var re4 = /[A-z]*(overval)/g;
+	var re5 = /(Steek)\w*/g;
 	var regExArray = [re1, re2];
 
 	for(var i = 0; i < regExArray.length; i++) {
@@ -55,14 +59,23 @@ Locationhelper.prototype.crimeSubStr = function(){
 
 };
 
-
 Locationhelper.prototype.popRegion = function(){
 	//will later take in an input -- removes the Region
 	//console.log(this.locJson);
-	var region = 'Rijnsburg';
+	var region = 'Leiden';
 	if (this.locJson.search(region) != -1){
 		return this.locJson.replace(region, '');
 	}
+};
+
+Locationhelper.prototype.findRetweets = function(){
+	//manually find retweets - don't ask
+	var re1 = /(RT)\s(@)/g;
+	var typeHolder = this.locJson.match(re1)
+	if (typeHolder != null) {
+		this.retweeted = true;
+	}
+
 };
 
 module.exports = Locationhelper;

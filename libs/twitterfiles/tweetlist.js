@@ -13,7 +13,6 @@ Twitterlist.prototype.createList = function (callback, context) {
 
 	this.oldTweetList.oauthCall(this.onJsonLoad, this);
 
-	/**/
 };
 
 Twitterlist.prototype.onJsonLoad = function(data){
@@ -23,17 +22,18 @@ Twitterlist.prototype.onJsonLoad = function(data){
 	for(var i= 0;i<twitterResponse.length;i++){
 		var tweet = new Twitterobject(twitterResponse[i]);
 		tweet.mainFunction();
-		this.queryProcessor.insertTweets(tweet);
-		this.queryProcessor.updateStreetTable(tweet);
-		this.queryProcessor.updateCrimeTable(tweet);
+		if(tweet.retweeted == false  && tweet.userReply == null){
+			//console.log(tweet.retweeted, tweet.tweetText, tweet.userReply);
+			this.queryProcessor.insertTweets(tweet);
+			this.queryProcessor.updateStreetTable(tweet);
+			this.queryProcessor.updateCrimeTable(tweet);
+		}
+
 		tweetObjectList.push(tweet);
 	};
 
 	this.onDataReceived.call(this.context, tweetObjectList);
 };
 
-Twitterlist.prototype.insertTweetTable = function(data){
-	this.queryProcessor.insertTweets(data);
-};
 
 module.exports = Twitterlist;

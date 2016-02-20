@@ -35,7 +35,7 @@ Twitterhelper.prototype.oauthCall = function(callback, context){
 	);
 
 	oauth.get(
-		"https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=WAGRijnsburg&count=5",
+		"https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=PolLeiden&count=20",
 		this.token,
 		this.secret,
 		function (error, data, response) {

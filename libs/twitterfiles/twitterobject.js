@@ -1,4 +1,4 @@
-var TweetLocCleanUp = require('../libs/locationfiles/lochelper');
+var TweetLocCleanUp = require('../locationfiles/lochelper');
 
 function Twitterobject (data){
 	//initialize all properties
@@ -10,13 +10,14 @@ function Twitterobject (data){
 	this.location = null;
 	this.crimeType = null;
 	this.streetName = null;
-	this.tweetCleaner = new TweetLocCleanUp(this.tweetText);
 }
 
 Twitterobject.prototype.mainFunction = function() {
-	this.tweetCleaner.mainFunct();
-	this.crimeType = this.tweetCleaner.crimeType;
-	this.streetName = this.tweetCleaner.tempStreet;
+	var tweetCleaner = new TweetLocCleanUp(this.tweetID, this.tweetText, this.retweeted);
+	tweetCleaner.mainFunct();
+	this.retweeted = tweetCleaner.retweeted;
+	this.crimeType = tweetCleaner.crimeType;
+	this.streetName = tweetCleaner.tempStreet;
 };
 
 module.exports = Twitterobject;
