@@ -91,7 +91,7 @@ QueryProcessor.prototype.updateStreetTable = function (data){
 		database:this.database
 	});
 
-	var streetInfo = {tweetid: data.tweetID, streetName: data.streetName};
+	var streetInfo = {tweetid: data.tweetID, streetName: data.streetName, region:data.region};
 
 	con.query('INSERT INTO streetList SET ?', streetInfo, function(err,res){
 		if(err) throw err;
