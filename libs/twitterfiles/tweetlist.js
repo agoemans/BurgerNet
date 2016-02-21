@@ -21,7 +21,7 @@ Twitterlist.prototype.onJsonLoad = function(data){
 
 	for(var i= 0;i<twitterResponse.length;i++){
 		var tweet = new Twitterobject(twitterResponse[i]);
-		tweet.mainFunction();
+
 		if(tweet.retweeted == false  && tweet.userReply == null){
 			//console.log(tweet.retweeted, tweet.tweetText, tweet.userReply);
 			this.queryProcessor.insertTweets(tweet);

@@ -37,50 +37,6 @@ QueryProcessor.prototype.insertTweets = function (data){
 
 };
 
-QueryProcessor.prototype.getSearchResults = function (callback, context){
-	var con = mysql.createConnection({
-		host:this.host,
-		user:dbOptions.user,
-		password:this.password,
-		database:this.database
-	});
-
-	//todo only for testing, remove this function later
-
-	var templist = [];
-	con.query('SELECT * FROM Tweet', function(err,rows){
-		if(err) throw err;
-		if (!err) {
-			templist = rows;
-			callback.call(context, rows);
-		}
-
-	});
-
-	con.end(function(err){
-		//Ends connection
-	})
-
-};
-
-QueryProcessor.prototype.updateAdditionalTables = function (){
-	this.getSearchResults(this.onQueryLoad, this);
-};
-
-QueryProcessor.prototype.onQueryLoad = function (content){
-	this.selectResults = content;
-	//console.log(this.selectResults);
-	for (var i =0; i < this.selectResults.length; i ++){
-		var locationHolder = new LocationHelper(this.selectResults[i]);
-		locationHolder.mainFunct();
-		this.updateStreetTable(locationHolder);
-		this.updateCrimeTable (locationHolder);
-		console.log(locationHolder.tempStreet);
-		console.log(locationHolder.crimeType);
-	}
-
-};
-
 
 QueryProcessor.prototype.updateStreetTable = function (data){
 
@@ -125,4 +81,92 @@ QueryProcessor.prototype.updateCrimeTable = function (data){
 };
 
 
+QueryProcessor.prototype.updateGeoCodes = function (coords, id){
+
+	var con = mysql.createConnection({
+		host:this.host,
+		user:dbOptions.user,
+		password:this.password,
+		database:this.database
+	});
+
+	var geoCodes = {tweetid: id, geoCode: coords};
+
+	con.query('INSERT INTO streetList SET ?', geoCodes, function(err,res){
+		if(err) throw err;
+	})
+
+	con.end(function(err){
+		//Ends connection
+	})
+
+};
+
+
+QueryProcessor.prototype.getSearchResults = function (callback, context){
+	var con = mysql.createConnection({
+		host:this.host,
+		user:dbOptions.user,
+		password:this.password,
+		database:this.database
+	});
+
+	//todo only for testing, remove this function later
+
+	var templist = [];
+	con.query('SELECT streetName, tweetid FROM streetList where streetName is not null', function(err,rows){
+		if(err) throw err;
+		if (!err) {
+			templist = rows;
+			callback.call(context, rows);
+		}
+
+	});
+
+	con.end(function(err){
+		//Ends connection
+	})
+
+};
+
+QueryProcessor.prototype.updateAdditionalTables = function (){
+	this.getSearchResults(this.onQueryLoad, this);
+};
+
+QueryProcessor.prototype.onQueryLoad = function (content){
+	this.selectResults = content;
+	var geoprocessor = require('../libs/locationfiles/geohelper');
+	//console.log(this.selectResults);
+	for (var i = 0; i < this.selectResults.length; i ++){
+		//geoprocessor
+		//var locationHolder = new LocationHelper(this.selectResults[i]);
+		//locationHolder.mainFunct();
+		//this.updateStreetTable(locationHolder);
+		//this.updateCrimeTable (locationHolder);
+		console.log(this.selectResults[i].streetName);
+
+	}
+
+};
+
+
 module.exports = QueryProcessor;
+
+//var s = new QueryProcessor();
+//s.updateAdditionalTables()
+
+//
+//var geoprocessor = require('../libs/locationfiles/geohelper');
+//var geo = new geoprocessor();//'Jan van Houtbrug');
+////var geo = new geoprocessor('behulp van een');
+//
+//loop data
+//{
+//	geo.getGeoCodes(locString, this.parseGeoCodes, this);
+//}
+//function parseGeoCodes(data)
+//{
+//	var location = data.results[0].geometry.location;
+//	dbHelper.insert(location);
+//}
+//console.log(geo.locationCodes);

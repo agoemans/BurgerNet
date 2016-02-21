@@ -11,9 +11,11 @@ function Twitterobject (data){
 	this.crimeType = null;
 	this.streetName = null;
 	this.region = null;
+
+	this.clean();
 }
 
-Twitterobject.prototype.mainFunction = function() {
+Twitterobject.prototype.clean = function() {
 	var tweetCleaner = new TweetLocCleanUp(this.tweetID, this.tweetText, this.retweeted);
 	tweetCleaner.mainFunct();
 	this.retweeted = tweetCleaner.retweeted;
@@ -29,4 +31,4 @@ module.exports = Twitterobject;
 //var s = "Aanrijding Jan van Houtbrug. Vanmorgen omstreeks 07.45 uur kreeg de politie de melding te gaan… https://t.co/aXyg3vVVRK"
 //var obj = {id_str:123, text:s, retweeted:false}
 //var x = new Twitterobject(obj)
-//x.mainFunction();
+//x.clean();

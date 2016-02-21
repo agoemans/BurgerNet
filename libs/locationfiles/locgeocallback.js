@@ -5,7 +5,7 @@ module.exports = function(req,res){
 	var locationhelper = new LocationHelper();
 	var geohelper = new GeoHelper(locationhelper.mainFunct());
 
-	geohelper.mainGeoCall(function(data){
+	geohelper.run(function(data){
 		res.json(data.results[0].geometry.location);
 	}, this);
 
