@@ -35,17 +35,11 @@ LocationUpdater.prototype.parseGeoCodes = function(data, id)
 {
 	var connectionToDB = require('../model/queryprocessor');
 	var updateGeoInDB = new connectionToDB();
-	var point = this.Point(data.lat, data.lng);
-	updateGeoInDB.updateGeoCodes(point,id);
-	console.log(data, id);
+	updateGeoInDB.insertGeoData(data,id);
+	//console.log(data, id);
 	//var location = data.results[0].geometry.location;
 
 	//dbHelper.insert(location);
-}
-
-LocationUpdater.prototype.Point = function(x, y)
-{
-	return (x, y);
 }
 
 

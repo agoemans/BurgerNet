@@ -81,7 +81,7 @@ QueryProcessor.prototype.updateCrimeTable = function (data){
 };
 
 
-QueryProcessor.prototype.updateGeoCodes = function (coords, id){
+QueryProcessor.prototype.insertGeoData = function (coords, id){
 
 	var con = mysql.createConnection({
 		host:this.host,
@@ -90,9 +90,15 @@ QueryProcessor.prototype.updateGeoCodes = function (coords, id){
 		database:this.database
 	});
 
-	var geoCodes = {tweetid: id, geoCode: coords};
 
-	con.query('INSERT INTO streetList SET ?', geoCodes, function(err,res){
+	console.log(coords, id);
+	var geoCodes = {geoCode: {lat:coords.lat, lng: coords.lng}, tweetid: id};
+
+	var point = 'POINT(' + coords.lat + ' ' + coords.lng  + ')';
+	console.log(point)
+	var inserts = ['geoCode', point, 'tweetid', id]
+
+	con.query('UPDATE streetList SET ?? = GeomFromText(?) where ?? = ?', inserts, function(err,res){
 		if(err) throw err;
 	})
 
