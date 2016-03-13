@@ -3,7 +3,7 @@ module.exports = function(req,res){
 	var GeoHelper = require('./geohelper.js');
 
 	var locationhelper = new LocationHelper();
-	var geohelper = new GeoHelper(locationhelper.mainFunct());
+	var geohelper = new GeoHelper(locationhelper.processTweetText());
 
 	geohelper.run(function(data){
 		res.json(data.results[0].geometry.location);

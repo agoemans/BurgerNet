@@ -1,21 +1,29 @@
-function Locationhelper(id, text, retweeted){
+function Locationhelper(){
 	//this.locJSON = "Afgelopen weekend zijn er twee inbraak pogingen " +
 	//"geweest in Rijnsburg. 1 op de Siegenlaan en 1 op de Collegiantenstraat. Iets gezien?09008844";
 	//tempStreet will be removed later, replaced with object
-	this.locJson = text;
-	this.tweetID = id;
-	this.retweeted = retweeted;
+	this.tweetText = null;
+	this.tweetID = null;
+	this.retweeted = null;
 	this.tempStreet = null;
 	this.crimeType = null;
 	this.region = null;
 }
 
-Locationhelper.prototype.mainFunct = function(){
+Locationhelper.prototype.createHelperProperties = function(id, text, retweeted){
+// this is the main function
+	this.tweetText = text;
+	this.tweetID = id;
+	this.retweeted = retweeted;
+
+};
+
+Locationhelper.prototype.processTweetText = function(){
 // this is the main function
 	this.findRetweets();
-	this.popRegion();
-	this.locationSubStr();
-	this.crimeSubStr();
+	//this.removeRegion();
+	this.findStreetNames();
+	this.findCrimeReferences();
 
 	//if (this.tempStreet != null && this.crimeType !=  null) {
 	//	return [this.tempStreet]
@@ -23,8 +31,9 @@ Locationhelper.prototype.mainFunct = function(){
 
 };
 
-Locationhelper.prototype.locationSubStr = function(){
+Locationhelper.prototype.findStreetNames = function(){
 // this picks the road - laan, straat or weg
+	this.removeRegion();
 	var re1 = /[A-z]*(straat)/g;
 	var re2 = /[A-z]*(laan)/g;
 	var re3 = /[A-z]*(weg)/g;
@@ -35,7 +44,7 @@ Locationhelper.prototype.locationSubStr = function(){
 	var regExArray = [re1, re2, re3, re4, re5];
 
 	for(var i = 0; i < regExArray.length; i++) {
-		var locHolder = this.locJson.match(regExArray[i])
+		var locHolder = this.tweetText.match(regExArray[i])
 		if (locHolder != null) {
 			this.tempStreet = locHolder[0];
 		}
@@ -44,7 +53,7 @@ Locationhelper.prototype.locationSubStr = function(){
 
 };
 
-Locationhelper.prototype.crimeSubStr = function(){
+Locationhelper.prototype.findCrimeReferences = function(){
 // this looks for crime type
 	var re1 = /[A-z]*(inbraak)/g;
 	var re2 = /[A-z]*(ingebroken)/g;
@@ -54,7 +63,7 @@ Locationhelper.prototype.crimeSubStr = function(){
 	var regExArray = [re1, re2, re3, re4, re5];
 
 	for(var i = 0; i < regExArray.length; i++) {
-		var typeHolder = this.locJson.match(regExArray[i])
+		var typeHolder = this.tweetText.match(regExArray[i])
 		if (typeHolder != null) {
 			this.crimeType = typeHolder[0];
 		}
@@ -62,20 +71,20 @@ Locationhelper.prototype.crimeSubStr = function(){
 
 };
 
-Locationhelper.prototype.popRegion = function(){
+Locationhelper.prototype.removeRegion = function(){
 	//will later take in an input -- removes the Region
-	//console.log(this.locJson);
+	//console.log(this.tweetText);
 	var region = 'Leiden';
-	if (this.locJson.search(region) != -1){
+	if (this.tweetText.search(region) != -1){
 		this.region = region;
-		return this.locJson.replace(region, '');
+		return this.tweetText.replace(region, '');
 	}
 };
 
 Locationhelper.prototype.findRetweets = function(){
 	//manually find retweets - don't ask
 	var re1 = /(RT)\s(@)/g;
-	var typeHolder = this.locJson.match(re1)
+	var typeHolder = this.tweetText.match(re1)
 	if (typeHolder != null) {
 		this.retweeted = true;
 	}

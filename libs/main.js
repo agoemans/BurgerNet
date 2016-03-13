@@ -43,8 +43,8 @@ module.exports = function(app, express, path)
 		//todo remove later - add to database
 		var getLocation = require('./locationfiles/lochelper.js');
 		var lochelpder = new getLocation("Wij zoeken nu twee mannen omgeving brouwersstraat/Oegstgeesterweg ivm mogelijk inbraak");
-		lochelpder.mainFunct();
-		res.send(lochelpder.locJson);
+		lochelpder.processTweetText();
+		res.send(lochelpder.tweetText);
 	});
 
 

@@ -16,8 +16,9 @@ function Twitterobject (data){
 }
 
 Twitterobject.prototype.clean = function() {
-	var tweetCleaner = new TweetLocCleanUp(this.tweetID, this.tweetText, this.retweeted);
-	tweetCleaner.mainFunct();
+	var tweetCleaner = new TweetLocCleanUp();
+	tweetCleaner.createHelperProperties(this.tweetID, this.tweetText, this.retweeted);
+	tweetCleaner.processTweetText();
 	this.retweeted = tweetCleaner.retweeted;
 	this.crimeType = tweetCleaner.crimeType;
 	this.streetName = tweetCleaner.tempStreet;

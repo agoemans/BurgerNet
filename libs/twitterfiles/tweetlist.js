@@ -7,13 +7,14 @@ function Twitterlist(){
 	this.queryProcessor = new QueryProcessor();
 }
 
-Twitterlist.prototype.createList = function (callback, context) {
-	this.onDataReceived = callback;
-	this.context = context;
+//Twitterlist.prototype.createList = function (callback, context) {
+Twitterlist.prototype.createList = function () {
+		//this.onDataReceived = callback;
+		//this.context = context;
 
-	this.oldTweetList.oauthCall(this.onJsonLoad, this);
+		this.oldTweetList.oauthCall(this.onJsonLoad, this);
 
-};
+}
 
 Twitterlist.prototype.onJsonLoad = function(data){
 	var twitterResponse = JSON.parse(data);
@@ -32,7 +33,7 @@ Twitterlist.prototype.onJsonLoad = function(data){
 		tweetObjectList.push(tweet);
 	};
 
-	this.onDataReceived.call(this.context, tweetObjectList);
+	//this.onDataReceived.call(this.context, tweetObjectList);
 };
 
 
